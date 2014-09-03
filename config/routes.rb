@@ -1,5 +1,5 @@
 Tributes::Application.routes.draw do
-  get "users/new"
+  resources :users
   
   root 'static_pages#home'
 

@@ -1,4 +1,4 @@
-$navbar-inverse-bg: black;
+$navbar-inverse-bg: #3f729b;
 $navbar-inverse-link-color: white;
 @import "bootstrap";
 
@@ -14,6 +14,10 @@ $navbar-inverse-link-color: white;
     clear: both;
 }
 
+body {
+	background: lightgray;
+}
+
 /* Brand Centered 
 .navbar-header {
     float: left;
@@ -27,6 +31,7 @@ $navbar-inverse-link-color: white;
 /* Jumbotron */
 .jumbotron {
 	text-align: center;
+	background: white;
 }
 
 /* typography */
@@ -98,4 +103,13 @@ footer ul {
 footer ul li {
   float: left;
   margin-left: 10px;
+}
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
 }

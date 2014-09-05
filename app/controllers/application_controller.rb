@@ -7,4 +7,5 @@ class ApplicationController < ActionController::Base
   def facebook_user?
   	provider != nil && uid != nil
 	end
+
 end

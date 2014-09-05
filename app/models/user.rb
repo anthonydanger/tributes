@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(?:\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  validates_confirmation_of :password, :if => :password_present?
   validates_presence_of     :password, :on => :create, :unless => :facebook_user?
+  validates_confirmation_of :password, :unless => :password.nil?
 
 	validates :name, presence: true, length: { maximum: 50 }
 	validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
@@ -26,5 +26,13 @@ class User < ActiveRecord::Base
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
       user.save!
     end
+  end
+
+  def password_present?
+    password_digest != nil && uid != nil
+  end
+
+  def facebook_user?
+    provider != nil && uid != nil
   end
 end

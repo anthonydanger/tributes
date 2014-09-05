@@ -22,7 +22,8 @@ class User < ActiveRecord::Base
       user.name = auth.info.name
       user.email = auth.info.email
       user.avatar = auth.info.image
-      user.password_digest = auth.info.email
+      user.password = auth.info.email
+      user.password_confirmation = auth.info.email
       user.oauth_token = auth.credentials.token
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
       user.save!

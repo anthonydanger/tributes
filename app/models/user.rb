@@ -1,11 +1,14 @@
 class User < ActiveRecord::Base
-	has_secure_password
-	#before_save { email.downcase! }
+	has_secure_password(validations: false)
+	before_save { email.downcase! }
 
 	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(?:\.[a-z\d\-]+)*\.[a-z]+\z/i
+
+  validates_confirmation_of :password, :if => :password_present?
+  validates_presence_of     :password, :on => :create, :unless => :facebook_user?
 
 	validates :name, presence: true, length: { maximum: 50 }
 	validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },

@@ -1,3 +1,5 @@
 <% provide(:title, @user.name) %>
 <h1><%= @user.name %></h1>
+<%= image_tag @user.avatar(:thumb) %>
+
 <p>Find me in app/views/users/show.html.erb</p>

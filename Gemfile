@@ -5,7 +5,9 @@ gem 'rails', '4.0.8'
 gem 'bootstrap-sass'
 gem 'sprockets', '2.11.0'
 gem 'bcrypt-ruby', '3.1.2'
-
+gem 'omniauth-facebook', '1.4.0'
+gem 'paperclip', '~> 4.2'
+gem 'certified'
 
 group :development, :test do
 	gem 'sqlite3', '1.3.8'

@@ -4,19 +4,18 @@ Tributes::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :standard_sessions, only: [:new, :create, :destroy]
   
-  root 'static_pages#home'
+  root                  'static_pages#home'
 
-  match '/signup',                  to: 'users#new',            via: 'get'   
-  match '/help',                    to: 'static_pages#help',    via: 'get'
-  match '/about',                   to: 'static_pages#about',   via: 'get'
-  match '/contact',                 to: 'static_pages#contact', via: 'get'
-  match '/privacy',                 to: 'static_pages#privacy', via: 'get'
-  match '/signin',                  to: 'sessions#new',         via: 'get'
+  get    'signup'   => 'users#new'            
+  get    'help'     => 'static_pages#help'  
+  get    'about'    => 'static_pages#about'
+  get    'contact'  => 'static_pages#contact'
+  get    'privacy'  => 'static_pages#privacy'
+  get    'signin'   => 'sessions#new'      
+  delete 'signout'  => 'sessions#destroy'
+  
   match '/auth/:provider/callback', to: 'sessions#create',      via: 'get'
   match '/auth/failure',            to: redirect('/'),          via: 'get'
-  get    'signout',                 to: 'sessions#destroy',      as: 'signout'
-  get    'login'  => 'standard_sessions#new'
-  delete 'logout' => 'standard_sessions#destroy'    
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

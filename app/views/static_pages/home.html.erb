@@ -2,10 +2,10 @@
 <div>
 	<% if current_user %>
 		Signed in as <strong><%= current_user.name %></strong>!
-		<%= link_to "Sign Out", signout_path, id: "sign_out" %>
+		<%= link_to "Sign Out", signout_path, method: "delete" %>
 	<% else %>
 		<div class="jumbotron">
-			<h1>Welcome to Tributes test2</h1>
+			<h1>Welcome to Tributes</h1>
 			<p>Create a digital <a href="#">Tribute</a> you can share with friends and family to honor your loved one.</p>
 			<%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
 			<br>

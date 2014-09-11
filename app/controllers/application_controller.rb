@@ -4,8 +4,4 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
 
-  def facebook_user?
-  	provider != nil && uid != nil
-	end
-
 end

@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 	has_secure_password #(validations: false)
-	before_save { email.downcase! }
+	
+  before_save { self.email = email.downcase }
+  before_create :create_remember_token
 
 	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
@@ -37,4 +39,18 @@ class User < ActiveRecord::Base
   def facebook_user?
     provider != nil && uid != nil
   end
+
+  def User.new_remember_token
+    SecureRandom.urlsafe_base64
+  end
+
+  def User.digest(token)
+    Digest::SHA1.hexdigest(token.to_s)
+  end
+
+  private
+
+    def create_remember_token
+      self.remember_token = User.digest(User.new_remember_token)
+    end
 end

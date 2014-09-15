@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-	has_secure_password #(validations: false)
+  self.per_page = 10 # For will_paginate
+  has_secure_password #(validations: false)
 	
   before_save { self.email = email.downcase }
   before_create :create_remember_token

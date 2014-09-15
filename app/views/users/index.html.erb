@@ -1,0 +1,19 @@
+<% provide(:title, 'All Users') %>
+<h1>All Users</h1>
+
+
+<%= will_paginate %>
+
+<ul class="users">
+	<% @users.each do |user| %>
+		<li>
+			<%= image_tag user.avatar(:thumb) %>
+			<%= link_to user.name, user %>
+			<% if current_user.admin? && !current_user(user) %>
+			| <%= link_to "delete", user, method: :delete, data: { confirm: "Are you sure you want to permanently delete this user?" } %>
+			<% end %>
+		</li>
+	<% end %>
+</ul>
+
+<%= will_paginate %>

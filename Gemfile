@@ -6,8 +6,11 @@ gem 'bootstrap-sass'
 gem 'sprockets', '2.11.0'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'omniauth-facebook', '1.4.0'
-gem 'paperclip', '~> 4.2'
+gem 'paperclip', '~> 3.0'
 gem 'certified'
+gem 'faker', '1.4.2'
+gem 'will_paginate', '3.0.7'
+gem 'bootstrap-will_paginate', '0.0.10'
 
 group :development, :test do
 	gem 'sqlite3', '1.3.8'

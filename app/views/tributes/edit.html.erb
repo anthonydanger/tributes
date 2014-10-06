@@ -1,0 +1,51 @@
+<% provide(:title, "Edit #{@tribute.name}") %>
+<h1>Update Profile for <%= @tribute.name %></h1>
+
+<div class="row">
+		<% if current_user?(@tribute.user) %>
+  	<%= link_to "delete", @tribute, method: :delete,
+                                       data: { confirm: "You sure?" } %>
+  <% end %>
+	<div class="col-md-6 col-md-offset-3">
+		<%= form_for(@tribute, :html => { :multipart => true }) do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<div class="control-group">
+				<%= f.label :name, class: "control-label" %>
+				<div class="controls">
+					<%= f.text_field :name  %>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<%= f.label :obituary, "Words you'd like to say" %>
+				<div class="controls">
+					<%= f.text_area :obituary, size: "20x6" %>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<%= f.label :dobirth, "Date of Birth" %>
+				<div class="controls">
+					<%= f.date_field :dobirth %>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<%= f.label :dodeath, "Date of Passing" %>
+				<div class="controls">
+					<%= f.date_field :dodeath %>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<%= image_tag @tribute.image(:thumb) %>
+				<%= f.label :image, "Image" %>
+				<div class="controls">
+					<%= f.file_field :image %>
+				</div>
+			</div>
+			<%= f.submit "Save Changes", class: "btn btn-primary" %>
+		</div>
+		<% end %>
+	</div>
+</div>

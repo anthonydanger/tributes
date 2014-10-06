@@ -1,8 +1,69 @@
 <% provide(:title, 'Home') %>
-<div>
 	<% if current_user %>
-		Signed in as <strong><%= current_user.name %></strong>!
-		<%= link_to "Sign Out", signout_path, method: "delete" %>
+	<div class="row">
+	  <aside class="col-md-4">
+	    <section class="user_info">
+	      <h1><%= link_to current_user.name, current_user %>
+						<%= image_tag current_user.avatar(:thumb) %>
+						<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> + Tribute </button>
+	      </h1>
+	    </section>
+	  </aside>
+	</div>
+
+	<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      	 <div id="error_explanation" style="display:none;">
+         </div>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Memorialize your loved one with a Tribute.</h4> *All fields are required
+
+      </div>
+    
+				<%= form_for(@tribute, :html => { :multipart => true }) do |f| %>
+  				<div class="modal-body">
+						<ul class="errors"></ul>
+
+						<div class="control-group">
+							<%= f.label :name, class: "control-label" %>
+							<div class="controls">
+								<%= f.text_field :name  %>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<%= f.label :obituary, "Words you'd like to say" %>
+							<div class="controls">
+								<%= f.text_area :obituary, size: "20x6" %>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<%= f.label :dobirth, "Date of Birth" %>
+							<div class="controls">
+								<%= f.date_field :dobirth %>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<%= f.label :dodeath, "Date of Passing" %>
+							<div class="controls">
+								<%= f.date_field :dodeath %>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<%= f.label :image, "Image" %>
+							<div class="controls">
+								<%= f.file_field :image %>
+							</div>
+						</div>
+					</div>
+						<%= f.submit "Create Tribute", class: "btn btn-large btn-primary" %>
+					<% end %>
 	<% else %>
 		<div class="jumbotron">
 			<h1>Welcome to Tributes</h1>

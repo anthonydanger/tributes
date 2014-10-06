@@ -13,12 +13,15 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    @tributes = @user.tributes.paginate(page: params[:page])
+    @tribute = current_user.tributes.build if signed_in?
   end
 
   def create
   	@user = User.new(user_params)
   	if @user.save
       sign_in @user
+      #UserMailer.account_activation(@user).deliver
   		flash[:success] = "Welcome to Tributes!"
   		redirect_to @user
   	else
@@ -52,14 +55,6 @@ class UsersController < ApplicationController
   		params.require(:user).permit(:name, :email, :avatar,
   																 :password, :password_confirmation)
   	end
-
-    def signed_in_user
-      unless signed_in?
-        store_location
-        flash[:danger] = "Please Log In."
-        redirect_to signin_url
-      end
-    end
 
     def correct_user
       @user = User.find(params[:id])

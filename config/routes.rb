@@ -1,19 +1,21 @@
 Tributes::Application.routes.draw do
-  
-  resources :users
-  resources :sessions, only: [:new, :create, :destroy]
-  resources :standard_sessions, only: [:new, :create, :destroy]
-  
-  root                  'static_pages#home'
 
-  get    'signup'   => 'users#new'            
+  resources :users
+  resources :sessions,            only: [:new, :create, :destroy]
+  resources :standard_sessions,   only: [:new, :create, :destroy]
+  resources :account_activations, only: :edit
+  resources :password_resets,     only: [:new, :create, :edit, :update]
+  resources :tributes
+
+  root                 'static_pages#home'
   get    'help'     => 'static_pages#help'  
   get    'about'    => 'static_pages#about'
   get    'contact'  => 'static_pages#contact'
   get    'privacy'  => 'static_pages#privacy'
   get    'signin'   => 'sessions#new'      
   delete 'signout'  => 'sessions#destroy'
-  
+  get    'signup'   => 'users#new'  
+
   match '/auth/:provider/callback', to: 'sessions#create',      via: 'get'
   match '/auth/failure',            to: redirect('/'),          via: 'get'
 

@@ -1,5 +1,5 @@
-$navbar-inverse-bg: #3f729b;
-$navbar-inverse-link-color: white;
+$navbar-inverse-bg: white;
+$navbar-inverse-link-color: grey;
 @import "bootstrap";
 
 /* clearfix hack */
@@ -14,8 +14,9 @@ $navbar-inverse-link-color: white;
     clear: both;
 }
 
+
 body {
-	background: lightgray;
+	background: lightblue;
 }
 
 /* Brand Centered 
@@ -70,6 +71,19 @@ p {
 	padding-top: 12px;
 	font-weight: bold;
 	line-height: 1;
+}
+
+.btn-sm {
+  margin-top: 5px;
+  padding-top: 10px;
+  font-weight: bold;
+  background: white;
+  text-color: grey;
+}
+
+.glyphicon {
+  font-weight: bold;
+  color: grey;
 }
 
 
@@ -143,4 +157,13 @@ input {
   .form-control {
     color: $state-danger-text;
   }
+}
+
+aside {
+  float: left;
+  display: block;
+}
+
+aside span {
+  display: block;
 }

@@ -1,0 +1,19 @@
+<% provide(:title, @tribute.name) %>
+<div class="row">
+	<h1><%= @tribute.name %>
+  </h1>
+  <% if current_user?(@tribute.user) %>
+  	<small><%= link_to "edit", edit_tribute_path(@tribute) %></small>
+  <% end %>
+  
+	<aside class="span4">
+		<section>
+			<%= image_tag @tribute.image.url(:thumb) %>
+			<p>
+				<%= @tribute.name %> was born <%= @tribute.dobirth.to_formatted_s(:long_ordinal) %> and passed away <%= @tribute.dodeath.to_formatted_s(:long_ordinal) %>.
+			<span class="obituary"><%= @tribute.obituary %>
+			</p>
+		<small>Created with love by <%= link_to @user.name, @user %>.</small>
+		</section>
+	</aside>
+</div>

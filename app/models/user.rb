@@ -1,8 +1,12 @@
 class User < ActiveRecord::Base
+  has_many :tributes, dependent: :destroy
+  attr_accessor :activation_token, :reset_token
+  before_save   :downcase_email
+  before_create :create_activation_digest
+
   self.per_page = 10 # For will_paginate
   has_secure_password #(validations: false)
 	
-  before_save { self.email = email.downcase }
   before_create :create_remember_token
 
 	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
@@ -33,6 +37,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def create_reset_digest
+    self.reset_token = User.new_remember_token
+    update_attribute(:reset_digest, User.digest(reset_token))
+    update_attribute(:reset_sent_at, Time.zone.now)
+  end
+
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver
+  end
+ 
   def password_present?
     password_digest != nil && uid != nil
   end
@@ -49,7 +63,25 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest(token.to_s)
   end
 
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
+  end
+
   private
+
+    def downcase_email
+      self.email = email.downcase
+    end
+
+    def create_activation_digest
+      self.activation_token  = User.new_remember_token
+      self.activation_digest = User.digest(activation_token)
+    end 
 
     def create_remember_token
       self.remember_token = User.digest(User.new_remember_token)

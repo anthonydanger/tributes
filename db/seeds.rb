@@ -10,7 +10,9 @@ User.create!(name:  "Victoria McBride",
              email: "victoria@example.com",
              password:              "password",
              password_confirmation: "password",
-             admin: true)
+             admin: true,
+             activated: true,
+             activated_at: Time.zone.now)
 
 99.times do |n|
   name  = Faker::Name.name
@@ -19,5 +21,14 @@ User.create!(name:  "Victoria McBride",
   User.create!(name:  name,
                email: email,
                password:              password,
-               password_confirmation: password)
+               password_confirmation: password,
+               activated: true,
+               activated_at: Time.zone.now)
+end
+
+users = User.take(5)
+3.times do
+  name = Faker::Name.name
+  obituary = Faker::Lorem.paragraph(5)
+  users.each { |user| user.tributes.create!(obituary: obituary, name: name) }
 end

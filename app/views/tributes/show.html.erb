@@ -2,18 +2,31 @@
 <div class="row">
 	<h1><%= @tribute.name %>
   </h1>
+  <%= render 'follow_form' if signed_in? %>
   <% if current_user?(@tribute.user) %>
   	<small><%= link_to "edit", edit_tribute_path(@tribute) %></small>
   <% end %>
-  
-	<aside class="span4">
+  <div class="col-md-4">
+    <section class="stats">
+      <%= render 'shared/stats' %>
+      <% if @users.any? %>
+        <div>
+          <% @users.each do |user| %>
+            <%= link_to image_tag(user.avatar(:thumb)), user %>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+  </div>
+	<div class="col-md-8">
 		<section>
 			<%= image_tag @tribute.image.url(:thumb) %>
+		  <%= render "shared/stats" %>
 			<p>
 				<%= @tribute.name %> was born <%= @tribute.dobirth.to_formatted_s(:long_ordinal) %> and passed away <%= @tribute.dodeath.to_formatted_s(:long_ordinal) %>.
 			<span class="obituary"><%= @tribute.obituary %>
 			</p>
 		<small>Created with love by <%= link_to @user.name, @user %>.</small>
 		</section>
-	</aside>
+	</div>
 </div>

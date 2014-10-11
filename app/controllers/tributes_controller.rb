@@ -1,5 +1,6 @@
 class TributesController < ApplicationController
-	before_action :signed_in_user
+	before_action :signed_in_user, only: [:index, :edit, :update, :destroy,
+                                          :following, :followers]
   before_action :correct_user, only: [:destroy, :edit]
 
   def create
@@ -12,10 +13,10 @@ class TributesController < ApplicationController
 		end
   end
 
-
   def show
   	@tribute = Tribute.find(params[:id])
   	@user = User.find(@tribute.user_id)
+    @users = @tribute.followers
   end
 
   def edit
@@ -36,6 +37,20 @@ class TributesController < ApplicationController
     @tribute.destroy
     flash[:success] = "Tribute Destroyed."
     redirect_to request.referrer || root_url
+  end
+
+  def following
+    @title = "Following"
+    @tribute = Tribute.find(params[:id])
+    @users = @tribute.following.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @tribute = Tribute.find(params[:id])
+    @users = @tribute.followers.paginate(page: params[:page])
+    render 'show_follow'
   end
 
  private

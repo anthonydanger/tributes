@@ -1,0 +1,9 @@
+<% @user ||= current_user %>
+<div class="stats">
+	<a href="<%= followers_tribute_path(params[:id]) %>">
+		followers:
+		<strong id="followers" class="stat">
+			<%= @tribute.followers.count %>
+		</strong>
+	</a>
+</div>

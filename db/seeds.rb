@@ -30,5 +30,13 @@ users = User.take(5)
 3.times do
   name = Faker::Name.name
   obituary = Faker::Lorem.paragraph(5)
-  users.each { |user| user.tributes.create!(obituary: obituary, name: name) }
+  dobirth = "1981/01/01"
+  dodeath = "2014/01/01"
+  users.each { |user| user.tributes.create!(obituary: obituary, name: name,
+                                         dobirth: dobirth, dodeath: dodeath, user_id: user.id) }
 end
+
+users = User.all
+tribute = Tribute.find(7)
+followers = users[2..40]
+followers.each {|follower| follower.follow(tribute)}

@@ -1,11 +1,22 @@
 Tributes::Application.routes.draw do
 
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :sessions,            only: [:new, :create, :destroy]
   resources :standard_sessions,   only: [:new, :create, :destroy]
   resources :account_activations, only: :edit
   resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :tributes
+  resources :relationships,       only: [:create, :destroy]
+  
+  resources :tributes do
+    member do
+      get :following, :followers
+    end
+  end
+
 
   root                 'static_pages#home'
   get    'help'     => 'static_pages#help'  
